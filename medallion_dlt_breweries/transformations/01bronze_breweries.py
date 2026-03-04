@@ -10,13 +10,14 @@ import requests
 
 @dp.table(
   name = "bronze_breweries",
+  catalog = "breweries_pipeline",
+  schema = "default",
   comment = "Raw API Ingestion"
 )
 def bronze_breweries():
     api = "https://api.openbrewerydb.org/v1/breweries?per_page=200"
     response = requests.get(api)
 
-    run_ts = spark.sql("SELECT current_timestamp()").collect()[0][0]
 
     data = response.json()
     SparkSession.builder.appName("Breweries").getOrCreate()
