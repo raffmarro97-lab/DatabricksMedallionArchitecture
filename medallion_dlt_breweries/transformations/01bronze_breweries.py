@@ -9,17 +9,12 @@ import requests
 # using "+ Add" in the file browser.
 
 @dp.table(
-  name = "bronze_breweries",
-  catalog = "breweries_pipeline",
-  schema = "default",
+  name="workspace.pipeline_breweries.bronze_breweries",
   comment = "Raw API Ingestion"
 )
 def bronze_breweries():
     api = "https://api.openbrewerydb.org/v1/breweries?per_page=200"
     response = requests.get(api)
-
-
     data = response.json()
-    SparkSession.builder.appName("Breweries").getOrCreate()
     df_raw = spark.createDataFrame(data)
     return df_raw
