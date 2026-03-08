@@ -3,8 +3,8 @@ from pyspark.sql.functions import col
 
 
 # Please edit the sample below
-@dp.view
-def silver_view_breweries_stream():
+@dp.table
+def silver_breweries_stream():
     return spark.readStream.table("silver_breweries")
 
 dp.create_streaming_table(
