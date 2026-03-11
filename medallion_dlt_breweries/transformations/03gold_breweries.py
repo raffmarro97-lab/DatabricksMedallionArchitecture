@@ -5,7 +5,10 @@ from pyspark.sql.functions import col
 # Please edit the sample below
 @dp.table
 def silver_breweries_stream():
-    return spark.readStream.table("silver_breweries")
+    return (spark.readStream
+                            .option("skipChangeCommits", "true")
+                            .table("silver_breweries")
+            )
 
 dp.create_streaming_table(
     name = "workspace.pipeline_breweries.gold_breweries",
