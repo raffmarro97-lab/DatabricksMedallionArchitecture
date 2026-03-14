@@ -8,7 +8,7 @@ from utilities import utils
     comment = "Cleaning the bronze table,  and add ingestion_ts"
 )
 def silver_breweries():
-    df = spark.read.table("bronze_breweries")
+    df = spark.read.table("silver_staging_breweries")
     run_ts = spark.sql("SELECT current_timestamp()").collect()[0][0]
     df = (
             df.select(            
