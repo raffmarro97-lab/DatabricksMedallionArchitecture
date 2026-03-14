@@ -8,9 +8,11 @@ from utilities import utils
     comment = "Add ingestion_ts"
 )
 def silver_breweries():
-    df = spark.read.table("bronze_breweries")
+    api_df = spark.read.table("pipeline_breweries.bronze_breweries")
+    cdc_df = spark.read.table("pipeline_breweries.cdc_breweries")
+    
     run_ts = spark.sql("SELECT current_timestamp()").collect()[0][0]
-    df = (
+    api_df = (
             df.select(            
                 'address_1', 
                 'address_2', 
@@ -36,4 +38,4 @@ def silver_breweries():
         
         )
     
-    return df
+    return api_df.unionByName(cdc_df)
