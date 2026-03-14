@@ -9,7 +9,7 @@ from utilities import utils
 )
 def silver_breweries():
     df = spark.read.table("silver_staging_breweries")
-    run_ts = spark.sql("SELECT current_timestamp()").collect()[0][0]
+    
     df = (
             df.select(            
                 'address_1', 
@@ -27,7 +27,8 @@ def silver_breweries():
                 'state', 
                 'state_province', 
                 'street', 
-                'website_url'
+                'website_url',
+                'ingestion_ts'
             )
             .where(
                 ( F.col("country") == "United States") &
@@ -62,10 +63,6 @@ def silver_breweries():
                 .otherwise(
                     F.col("postal_code")
                 )
-            )
-            .withColumn(
-                "ingestion_ts", 
-                F.lit(run_ts) #da utlizzare come sequence_by
             )
             .withColumn(
                 "brewery_sk",
