@@ -8,7 +8,7 @@ from utilities import utils
     comment = "Cleaning the bronze table,  and add ingestion_ts"
 )
 def silver_breweries():
-    df = spark.read.table("silver_staging_breweries")
+    df = spark.read.table("workspace.pipeline_breweries.silver_staging_breweries")
     
     df = (
             df.select(            
