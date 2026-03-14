@@ -51,7 +51,7 @@ def silver_breweries():
                 utils.clean_phone("phone")
             )
             .withColumn(
-                "postalcode",
+                "postal_code",
                 F.when(
                     F.col("postal_code").isNull(),
                     F.lit("Unknown")

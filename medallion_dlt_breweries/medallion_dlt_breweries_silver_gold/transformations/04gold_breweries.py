@@ -18,7 +18,7 @@ dp.create_streaming_table(
 dp.create_auto_cdc_flow(
     target = "gold_breweries",
     source = "silver_breweries_stream",
-    keys = ["brewery_sk"],
+    keys = ["id"],
     sequence_by = col("ingestion_ts"),
     stored_as_scd_type = 2,
     except_column_list = ["ingestion_ts"]
