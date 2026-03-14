@@ -9,11 +9,11 @@ from utilities import utils
 )
 def silver_breweries():
     api_df = spark.read.table("pipeline_breweries.bronze_breweries")
-    cdc_df = spark.read.table("pipeline_breweries.cdc_breweries")
+    cdc_df = spark.read.table("pipeline_breweries.cdc_breweries_events")
     
     run_ts = spark.sql("SELECT current_timestamp()").collect()[0][0]
     api_df = (
-            df.select(            
+            api_df.select(            
                 'address_1', 
                 'address_2', 
                 'address_3', 
