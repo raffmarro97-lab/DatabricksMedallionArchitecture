@@ -6,7 +6,7 @@ from pyspark.sql import functions as F
     comment = "Aggregated breweries - Numero di breweries per stato"
 )
 def agg_breweries():
-    df =  spark.read.table("gold_breweries")
+    df =  spark.read.table("workspace.pipeline_breweries.gold_breweries")
 
     return (
         df

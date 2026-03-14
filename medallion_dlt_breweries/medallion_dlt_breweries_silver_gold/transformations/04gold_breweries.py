@@ -7,7 +7,7 @@ from pyspark.sql.functions import col
 def silver_breweries_stream():
     return (spark.readStream
                             .option("skipChangeCommits", "true")
-                            .table("silver_breweries")
+                            .table("workspace.pipeline_breweries.silver_breweries")
             )
 
 dp.create_streaming_table(
