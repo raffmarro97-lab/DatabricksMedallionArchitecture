@@ -38,4 +38,10 @@ def silver_breweries():
         
         )
     
-    return api_df.unionByName(cdc_df)
+    api_filtered = api_df.join(
+                            cdc_df.select("id").distinct(), 
+                            on ="id", 
+                            how = "leftanti"
+                        )
+    
+    return api_filtered.unionByName(cdc_df)
