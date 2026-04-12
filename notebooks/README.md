@@ -22,8 +22,6 @@ notebooks/
 
 └── 05_GoldModeling.ipynb
 
-text
-
 ---
 
 ## 🏗️ Architecture
