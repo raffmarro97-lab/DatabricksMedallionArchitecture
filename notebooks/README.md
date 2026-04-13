@@ -1,5 +1,5 @@
 # 🍺 Breweries Medallion Architecture — Databricks Notebooks
-[![Databricks](https://img.shields.io/badge/Databricks-UC%20Pipeline-blue)](https://www.databricks.com/)
+[![Databricks](https://img.shields.io/badge/Databricks-%20Notebook-blue)](https://www.databricks.com/)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-green)](https://www.python.org/)
 [![Delta Lake](https://img.shields.io/badge/Delta%20Lake-3.0-orange)](https://delta.io/)
 
