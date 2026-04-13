@@ -37,7 +37,8 @@ def bronze_breweries():
   
   per_page = 10
 
-  current_page = int(spark.conf.get("current_page", "1"))
+
+  current_page = spark.table("workspace.pipeline_breweries.bronze_breweries_job_config").collect()[0]["current_page"]
 
   params = {
     "page": current_page,
