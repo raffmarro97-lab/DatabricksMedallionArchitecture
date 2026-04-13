@@ -25,7 +25,8 @@ notebooks/
 ---
 
 ## 🏗️ Architecture
-![Notbeook Medallion Architecture Breweries.png](./Notbeook Medallion Architecture Breweries.png "Notbeook Medallion Architecture Breweries.png")
+![Notbeook_Medallion_Architecture_Breweries.png](./Notbeook_Medallion_Architecture_Breweries.png "Notbeook_Medallion_Architecture_Breweries.png")
+
 ---
 
 ## 📋 Delta Tables — Unity Catalog
