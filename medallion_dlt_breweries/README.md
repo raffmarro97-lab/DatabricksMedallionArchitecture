@@ -13,7 +13,7 @@ CDC simulation, data cleaning, SCD Type 2, and Gold aggregations.
 ---
 
 ## 📐 Overall Architecture
-![Pipeline Medallion Architecture Breweries.png](./Pipeline Medallion Architecture Breweries.png "Pipeline Medallion Architecture Breweries.png")
+![Pipeline_Medallion_Architecture_Breweries.png](./Pipeline_Medallion_Architecture_Breweries.png "Pipeline_Medallion_Architecture_Breweries.png")
 
 ---
 
