@@ -1,0 +1,21 @@
+# Databricks CLI config (contiene token di accesso!)
+.databrickscfg
+
+# Cache Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter/Databricks notebook checkpoints
+.ipynb_checkpoints/
+
+# Log e file temporanei
+*.log
+*.tmp
+
+# macOS
+.DS_Store
+
+# Delta/Spark checkpoint locali
+_delta_log/
+*.crc
