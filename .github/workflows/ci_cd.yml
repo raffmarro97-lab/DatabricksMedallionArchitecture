@@ -1,0 +1,60 @@
+name: CI/CD Medallion Breweries
+
+on:
+  push:
+    branches: [main]
+  pull_request: 
+    branches: [main]
+
+jobs:
+
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install flake8 pytest pyspark
+
+      - name: Lint transformations
+        run: |
+          flake8 medallion_dlt_breweries_bronze_silver/transformations/ --max-line-length=120
+          flake8 medallion_dlt_breweries_silver_gold/transformations/ --max-line-length=120
+
+      - name: Run tests
+        run: pytest tests/ -v
+      
+  cd:
+    needs: ci
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Databricks CLI
+        run: |
+          databricks configure --token <<EOF
+          ${{ secrets.DATABRICKS_HOST }}
+          ${{ secrets.DATABRICKS_TOKEN }}
+          EOF
+
+      - name: Upload notebooks Bronze/Silver
+        run: |
+          databricks workspace import_dir \
+            medallion_dlt_breweries_bronze_silver/transformations \
+            /Shared/breweries/bronze_silver \
+            --overwrite --language PYTHON
+
+      - name: Upload notebooks Silver/Gold
+        run: |
+          databricks workspace import_dir \
+            medallion_dlt_breweries_silver_gold/transformations \
+            /Shared/breweries/silver_gold \
+            --overwrite --language PYTHON
+
+      - name: Trigger Job Databricks
+        run: databricks jobs run-now --job-id ${{ secrets.DATABRICKS_JOB_ID }}
