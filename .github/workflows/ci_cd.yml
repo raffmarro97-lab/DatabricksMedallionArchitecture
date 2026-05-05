@@ -59,14 +59,14 @@ jobs:
         run: |
           databricks workspace import-dir \
             medallion_dlt_breweries/medallion_dlt_breweries_bronze_silver/transformations \
-            /Shared/breweries/bronze_silver \
+            /Users/${{ secrets.DATABRICKS_USER }}/breweries/bronze_silver \
             --overwrite
-
+      
       - name: Upload notebooks Silver/Gold
         run: |
-          databricks workspace import_dir \
+          databricks workspace import-dir \
             medallion_dlt_breweries/medallion_dlt_breweries_silver_gold/transformations \
-            /Shared/breweries/silver_gold \
+            /Users/${{ secrets.DATABRICKS_USER }}/breweries/silver_gold \
             --overwrite
 
       - name: Trigger Job Databricks
