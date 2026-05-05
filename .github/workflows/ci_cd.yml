@@ -22,8 +22,8 @@ jobs:
 
       - name: Lint transformations
         run: |
-          flake8 medallion_dlt_breweries_bronze_silver/transformations/ --max-line-length=120
-          flake8 medallion_dlt_breweries_silver_gold/transformations/ --max-line-length=120
+          flake8 medallion_dlt_breweries/medallion_dlt_breweries_bronze_silver/transformations/ --max-line-length=120
+          flake8 medallion_dlt_breweries/medallion_dlt_breweries_silver_gold/transformations/ --max-line-length=120
 
       - name: Run tests
         run: pytest tests/ -v
@@ -45,14 +45,14 @@ jobs:
       - name: Upload notebooks Bronze/Silver
         run: |
           databricks workspace import_dir \
-            medallion_dlt_breweries_bronze_silver/transformations \
+            medallion_dlt_breweries/medallion_dlt_breweries_bronze_silver/transformations \
             /Shared/breweries/bronze_silver \
             --overwrite --language PYTHON
 
       - name: Upload notebooks Silver/Gold
         run: |
           databricks workspace import_dir \
-            medallion_dlt_breweries_silver_gold/transformations \
+            medallion_dlt_breweries/medallion_dlt_breweries_silver_gold/transformations \
             /Shared/breweries/silver_gold \
             --overwrite --language PYTHON
 
