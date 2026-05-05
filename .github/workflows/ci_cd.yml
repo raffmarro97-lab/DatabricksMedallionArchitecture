@@ -39,42 +39,18 @@ jobs:
         run: pytest tests/ -v || true
 
   cd:
+      
     needs: ci
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4.2.2
-
+  
       - name: Install Databricks CLI
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
-
-      - name: Upload notebooks Bronze/Silver
-        env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: |
-          databricks workspace import-dir \
-            medallion_dlt_breweries/medallion_dlt_breweries_bronze_silver/transformations \
-            /Users/raffmarro97@gmail.com/DatabricksMedallionArchitecture/medallion_dlt_breweries/medallion_dlt_breweries_bronze_silver/transformations \
-            --overwrite
-      
-      - name: Upload notebooks Silver/Gold
-        env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: |
-          databricks workspace import-dir \
-            medallion_dlt_breweries/medallion_dlt_breweries_silver_gold/transformations \
-            /Users/raffmarro97@gmail.com/DatabricksMedallionArchitecture/medallion_dlt_breweries/medallion_dlt_breweries_silver_gold/transformations \
-            --overwrite
-            
-      - name: Upload notebooks Silver/Gold
-        run: |
-          databricks workspace import-dir \
-            medallion_dlt_breweries/medallion_dlt_breweries_silver_gold/transformations \
-            /Users/${{ secrets.DATABRICKS_USER }}/breweries/silver_gold \
-            --overwrite
-
+        run: curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+  
       - name: Trigger Job Databricks
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: databricks jobs run-now --job-id ${{ secrets.DATABRICKS_JOB_ID }}
