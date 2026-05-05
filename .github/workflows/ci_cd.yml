@@ -53,4 +53,4 @@ jobs:
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: databricks jobs run-now --job-id ${{ secrets.DATABRICKS_JOB_ID }}
+        run: databricks jobs run-now ${{ secrets.DATABRICKS_JOB_ID }}
