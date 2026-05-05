@@ -50,19 +50,23 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
 
       - name: Upload notebooks Bronze/Silver
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
-          databricks workspace mkdirs /Shared/breweries/bronze_silver
           databricks workspace import-dir \
             medallion_dlt_breweries/medallion_dlt_breweries_bronze_silver/transformations \
-            /Shared/breweries/bronze_silver \
+            /Users/raffmarro97@gmail.com/DatabricksMedallionArchitecture/medallion_dlt_breweries/medallion_dlt_breweries_bronze_silver/transformations \
             --overwrite
       
       - name: Upload notebooks Silver/Gold
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
-          databricks workspace mkdirs /Shared/breweries/silver_gold
           databricks workspace import-dir \
             medallion_dlt_breweries/medallion_dlt_breweries_silver_gold/transformations \
-            /Shared/breweries/silver_gold \
+            /Users/raffmarro97@gmail.com/DatabricksMedallionArchitecture/medallion_dlt_breweries/medallion_dlt_breweries_silver_gold/transformations \
             --overwrite
             
       - name: Upload notebooks Silver/Gold
