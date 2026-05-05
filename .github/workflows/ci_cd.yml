@@ -49,19 +49,22 @@ jobs:
         run: |
           curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
 
-      - name: Configure Databricks CLI
-        run: |
-          echo "[DEFAULT]
-          host = ${{ secrets.DATABRICKS_HOST }}
-          token = ${{ secrets.DATABRICKS_TOKEN }}" > ~/.databrickscfg
-
       - name: Upload notebooks Bronze/Silver
         run: |
+          databricks workspace mkdirs /Shared/breweries/bronze_silver
           databricks workspace import-dir \
             medallion_dlt_breweries/medallion_dlt_breweries_bronze_silver/transformations \
-            /Users/${{ secrets.DATABRICKS_USER }}/breweries/bronze_silver \
+            /Shared/breweries/bronze_silver \
             --overwrite
       
+      - name: Upload notebooks Silver/Gold
+        run: |
+          databricks workspace mkdirs /Shared/breweries/silver_gold
+          databricks workspace import-dir \
+            medallion_dlt_breweries/medallion_dlt_breweries_silver_gold/transformations \
+            /Shared/breweries/silver_gold \
+            --overwrite
+            
       - name: Upload notebooks Silver/Gold
         run: |
           databricks workspace import-dir \
