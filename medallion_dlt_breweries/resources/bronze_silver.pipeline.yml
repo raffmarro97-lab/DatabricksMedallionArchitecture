@@ -1,0 +1,15 @@
+resources:
+  pipelines:
+    bronze_silver_pipeline:
+      name: medallion_breweries_bronze_silver
+      
+      catalog: ${var.catalog}
+      target: ${var.schema}
+
+      serverless: true
+      continuous: false
+      photon: true
+
+      libraries:
+      - notebook:
+          path: ../src/bronze_silver/transformations/01bronze_breweries.py
