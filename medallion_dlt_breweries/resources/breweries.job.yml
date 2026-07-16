@@ -44,7 +44,7 @@ resources:
           run_if: ALL_SUCCESS
 
           notebook_task:
-            notebook_path: ../src/silver_gold/utilities/Creation Randomic Data.ipynb
+            notebook_path: ../src/orchestration/Creation Randomic Data.ipynb
             source: WORKSPACE
 
         - task_key: Pipeline_Silver_Cleaning_and_Gold_Modeling
@@ -64,7 +64,7 @@ resources:
           run_if: ALL_DONE
 
           notebook_task:
-            notebook_path: ../src/notifications/slack_notification_job_status.py
+            notebook_path: ../src/notifications/SlackNotificationJobStatus.ipynb
             source: WORKSPACE
 
             base_parameters:
