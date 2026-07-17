@@ -12,25 +12,30 @@ resources:
           unit: DAYS
 
       tasks:
-        - task_key: CountBronze_Breweries
+        - task_key: Compute_Page
           notebook_task:
-            notebook_path: ../src/orchestration/count_bronze_breweries.ipynb
+            notebook_path: ../src/orchestration/CountBronze_Breweries.ipynb
             source: WORKSPACE
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
 
         - task_key: Config
           depends_on:
-            - task_key: CountBronze_Breweries
-
+            - task_key: Compute_Page
           run_if: ALL_SUCCESS
 
           notebook_task:
             notebook_path: ../src/orchestration/pass_config.ipynb
             source: WORKSPACE
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
 
         - task_key: Pipeline_Bronze_Ingestion_and_Silver_Ingestion
           depends_on:
             - task_key: Config
-
+          
           run_if: ALL_SUCCESS
 
           pipeline_task:
@@ -44,9 +49,12 @@ resources:
           run_if: ALL_SUCCESS
 
           notebook_task:
-            notebook_path: ../src/orchestration/Creation Randomic Data.ipynb
+            notebook_path: ../src/medallion_dlt_breweries_silver_gold/utilities/Creation Randomic Data.ipynb
             source: WORKSPACE
-
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+              
         - task_key: Pipeline_Silver_Cleaning_and_Gold_Modeling
           depends_on:
             - task_key: Creation_Randomic_Data
