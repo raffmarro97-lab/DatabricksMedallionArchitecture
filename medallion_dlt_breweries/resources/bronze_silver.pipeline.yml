@@ -4,7 +4,7 @@ resources:
       name: medallion_breweries_bronze_silver
       
       catalog: ${var.catalog}
-      target: ${var.schema}
+      schema: ${var.schema}
 
       serverless: true
       continuous: false

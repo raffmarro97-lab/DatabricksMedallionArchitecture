@@ -1,24 +1,24 @@
 resources:
     pipelines:
         silver_gold_pipeline:
-    name: medallion_breweries_silver_gold
+            name: medallion_breweries_silver_gold
 
-    catalog: ${var.catalog}
-    target: ${var.schema}
+            catalog: ${var.catalog}
+            schema: ${var.schema}
 
-    serverless: true
-    continuous: false
-    photon: true
+            serverless: true
+            continuous: false
+            photon: true
 
-    libraries:
-        - notebook:
-            path: ../src/silver_gold/transformations/02silver_staging_breweries.py
+            libraries:
+                - notebook:
+                    path: ../src/silver_gold/transformations/02silver_staging_breweries.py
 
-        - notebook:
-            path: ../src/silver_gold/transformations/03silver_breweries.py
+                - notebook:
+                    path: ../src/silver_gold/transformations/03silver_breweries.py
 
-        - notebook:
-            path: ../src/silver_gold/transformations/04gold_breweries.py
+                - notebook:
+                    path: ../src/silver_gold/transformations/04gold_breweries.py
 
-        - notebook:
-            path: ../src/silver_gold/transformations/05agg_breweries.py
+                - notebook:
+                    path: ../src/silver_gold/transformations/05agg_breweries.py

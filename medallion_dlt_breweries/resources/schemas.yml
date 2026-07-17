@@ -2,5 +2,5 @@ resources:
     schemas:
         breweries_schema:
             name: ${var.schema}
-            catalog: ${var.catalog}
+            catalog_name: ${var.catalog}
             comment: Schema for the ${bundle.target} environment
