@@ -12,4 +12,4 @@ resources:
 
       libraries:
       - notebook:
-          path: ../src/bronze_silver/transformations/01bronze_breweries.py
+          path: ../src/medallion_dlt_breweries_bronze_silver/transformations/01bronze_breweries.py
