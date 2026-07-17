@@ -11,14 +11,14 @@ resources:
             photon: true
 
             libraries:
-                - notebook:
+                - file:
                     path: ../src/medallion_dlt_breweries_silver_gold/transformations/02silver_staging_breweries.py
 
-                - notebook:
+                - file:
                     path: ../src/medallion_dlt_breweries_silver_gold/transformations/03silver_breweries.py
 
-                - notebook:
+                - file:
                     path: ../src/medallion_dlt_breweries_silver_gold/transformations/04gold_breweries.py
 
-                - notebook:
+                - file:
                     path: ../src/medallion_dlt_breweries_silver_gold/transformations/05agg_breweries.py

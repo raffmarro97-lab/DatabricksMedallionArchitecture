@@ -11,5 +11,5 @@ resources:
       photon: true
 
       libraries:
-      - notebook:
+      - file:
           path: ../src/medallion_dlt_breweries_bronze_silver/transformations/01bronze_breweries.py
