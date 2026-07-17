@@ -6,6 +6,10 @@ resources:
       catalog: ${var.catalog}
       schema: ${var.schema}
 
+      configuration:
+        breweries.catalog: ${var.catalog}
+        breweries.schema: ${var.schema}
+      
       serverless: true
       continuous: false
       photon: true
