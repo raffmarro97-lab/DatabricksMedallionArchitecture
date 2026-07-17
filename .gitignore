@@ -19,3 +19,4 @@ __pycache__/
 # Delta/Spark checkpoint locali
 _delta_log/
 *.crc
+medallion_dlt_breweries/.databricks/
