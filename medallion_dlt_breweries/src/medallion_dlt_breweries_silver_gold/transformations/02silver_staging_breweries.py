@@ -1,15 +1,21 @@
 from pyspark import pipelines as dp
 from pyspark.sql.functions import col, count, count_if
 from pyspark.sql import functions as F
-from utilities import utils
+#from utilities import utils
+
+catalog = spark.conf.get("breweries.catalog")
+schema_name = spark.conf.get("breweries.schema")
+
+bronze_table = f"{catalog}.{schema_name}.bronze_breweries"
+cdc_table = f"{catalog}.{schema_name}.cdc_breweries"
 
 @dp.table(
     name = "workspace.pipeline_breweries.silver_staging_breweries",
     comment = "Add ingestion_ts"
 )
-def silver_breweries():
-    api_df = spark.read.table("pipeline_breweries.bronze_breweries")
-    cdc_df = spark.read.table("pipeline_breweries.cdc_breweries_events")
+def silver_staging_breweries():
+    api_df = spark.read.table(bronze_table)
+    cdc_df = spark.read.table(cdc_table)
     
     run_ts = spark.sql("SELECT current_timestamp()").collect()[0][0]
     api_df = (

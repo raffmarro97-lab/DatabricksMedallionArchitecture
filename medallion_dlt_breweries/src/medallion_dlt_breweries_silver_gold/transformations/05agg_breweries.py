@@ -1,12 +1,17 @@
 from pyspark import pipelines as dp
 from pyspark.sql import functions as F
 
+catalog = spark.conf.get("breweries.catalog")
+schema_name = spark.conf.get("breweries.schema")
+
+gold_table = f"{catalog}.{schema_name}.gold_breweries"
+
 @dp.table(
     name = "workspace.pipeline_breweries.agg_breweries",
     comment = "Aggregated breweries - Numero di breweries per stato"
 )
 def agg_breweries():
-    df =  spark.read.table("workspace.pipeline_breweries.gold_breweries")
+    df =  spark.read.table(gold_table)
 
     return (
         df

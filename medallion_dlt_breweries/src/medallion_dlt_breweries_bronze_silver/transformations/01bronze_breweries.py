@@ -1,59 +1,53 @@
 from pyspark import pipelines as dp
 from pyspark.sql.functions import col, count, count_if
 from pyspark.sql import functions as F
-from utilities import utils
-from pyspark.sql.types import *
-import requests
+#from utilities import utils
 
-# This file defines a sample transformation.
-# Edit the sample below or add new transformations
-# using "+ Add" in the file browser.
-empty_schema = StructType(
-  [
-    StructField("id",             StringType(), True),
-    StructField("name",           StringType(), True),
-    StructField("brewery_type",   StringType(), True),
-    StructField("address_1",      StringType(), True),
-    StructField("address_2",      StringType(), True),
-    StructField("address_3",      StringType(), True),
-    StructField("city",           StringType(), True),
-    StructField("state_province", StringType(), True),
-    StructField("postal_code",    StringType(), True),
-    StructField("country",        StringType(), True),
-    StructField("longitude",      DoubleType(), True),
-    StructField("latitude",       DoubleType(), True),
-    StructField("phone",          StringType(), True),
-    StructField("website_url",    StringType(), True),
-    StructField("state",          StringType(), True),
-    StructField("street",         StringType(), True)
-  ]
-)
+catalog = spark.conf.get("breweries.catalog")
+schema_name = spark.conf.get("breweries.schema")
+
+bronze_table = f"{catalog}.{schema_name}.bronze_breweries"
+cdc_table = f"{catalog}.{schema_name}.cdc_breweries"
 
 @dp.table(
-  name="workspace.pipeline_breweries.bronze_breweries",
-  comment = "Raw API Ingestion"
+    name = "workspace.pipeline_breweries.silver_staging_breweries",
+    comment = "Add ingestion_ts"
 )
-def bronze_breweries():
-  
-  per_page = 10
-
-
-  current_page = spark.table("workspace.pipeline_breweries.bronze_breweries_job_config").collect()[0]["current_page"]
-
-  params = {
-    "page": current_page,
-    "per_page": per_page
-  }
-
-  api = "https://api.openbrewerydb.org/v1/breweries"
-  
-  # Legge il valore passato dal notebook precedente
-  response = requests.get(api, params = params)
-  
-  data = response.json()
-
-  if data:
-    df_raw = spark.createDataFrame(data, schema = empty_schema)
-    return df_raw
-  else:
-    return spark.createDataFrame([], schema = empty_schema)
+def silver_staging_breweries():
+    api_df = spark.read.table(bronze_table)
+    cdc_df = spark.read.table(cdc_table)
+    
+    run_ts = spark.sql("SELECT current_timestamp()").collect()[0][0]
+    api_df = (
+            api_df.select(            
+                'address_1', 
+                'address_2', 
+                'address_3', 
+                'brewery_type', 
+                'city', 
+                'country', 
+                'id', 
+                'latitude', 
+                'longitude', 
+                'name', 
+                'phone', 
+                'postal_code', 
+                'state', 
+                'state_province', 
+                'street', 
+                'website_url'
+            )
+            .withColumn(
+                "ingestion_ts", 
+                F.lit(run_ts) #da utlizzare come sequence_by
+            )
+        
+        )
+    
+    api_filtered = api_df.join(
+                            cdc_df.select("id").distinct(), 
+                            on ="id", 
+                            how = "left_anti"
+                        )
+    
+    return api_filtered.unionByName(cdc_df)

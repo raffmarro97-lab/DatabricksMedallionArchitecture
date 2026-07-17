@@ -1,13 +1,17 @@
 from pyspark import pipelines as dp
 from pyspark.sql.functions import col
 
+catalog = spark.conf.get("breweries.catalog")
+schema_name = spark.conf.get("breweries.schema")
+
+silver_table = f"{catalog}.{schema_name}.silver_breweries"
 
 # Please edit the sample below
 @dp.table
 def silver_breweries_stream():
     return (spark.readStream
                             .option("skipChangeCommits", "true")
-                            .table("workspace.pipeline_breweries.silver_breweries")
+                            .table(silver_table)
             )
 
 dp.create_streaming_table(

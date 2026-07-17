@@ -1,14 +1,31 @@
 from pyspark import pipelines as dp
 from pyspark.sql.functions import col, count, count_if
 from pyspark.sql import functions as F
+
+pipeline_root = os.path.abspath(
+    os.path.join(
+        os.path.dirname("__file__"), 
+        ".."
+    )
+)
+
+if pipeline_root not in sys.path:
+    sys.path.append(pipeline_root)
+
 from utilities import utils
+
+# Parametri ricevuti da silver_gold.pipeline.yml
+catalog = spark.conf.get("breweries.catalog")
+schema_name = spark.conf.get("breweries.schema")
+
+silver_staging_table = f"{catalog}.{schema_name}.silver_staging_breweries"
 
 @dp.table(
     name = "workspace.pipeline_breweries.silver_breweries",
     comment = "Cleaning the bronze table,  and add ingestion_ts"
 )
 def silver_breweries():
-    df = spark.read.table("workspace.pipeline_breweries.silver_staging_breweries")
+    df = spark.read.table(silver_staging_table)
     
     df = (
             df.select(            
