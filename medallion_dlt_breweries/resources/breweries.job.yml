@@ -17,8 +17,8 @@ resources:
             notebook_path: ../src/orchestration/CountBronze_Breweries.ipynb
             source: WORKSPACE
             base_parameters:
-              catalog: ${var.catalog}
-              schema: ${var.schema}
+              catalog: ${resources.schemas.breweries_schema.catalog_name}
+              schema: ${resources.schemas.breweries_schema.schema.name}
 
         - task_key: Config
           depends_on:
@@ -29,8 +29,8 @@ resources:
             notebook_path: ../src/orchestration/pass_config.ipynb
             source: WORKSPACE
             base_parameters:
-              catalog: ${var.catalog}
-              schema: ${var.schema}
+              catalog: ${resources.schemas.breweries_schema.catalog_name}
+              schema: ${resources.schemas.breweries_schema.schema.name}
 
         - task_key: Pipeline_Bronze_Ingestion_and_Silver_Ingestion
           depends_on:
@@ -52,8 +52,8 @@ resources:
             notebook_path: ../src/medallion_dlt_breweries_silver_gold/utilities/Creation Randomic Data.ipynb
             source: WORKSPACE
             base_parameters:
-              catalog: ${var.catalog}
-              schema: ${var.schema}
+              catalog: ${resources.schemas.breweries_schema.catalog_name}
+              schema: ${resources.schemas.breweries_schema.schema.name}
               
         - task_key: Pipeline_Silver_Cleaning_and_Gold_Modeling
           depends_on:
