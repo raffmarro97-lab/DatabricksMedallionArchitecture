@@ -4,7 +4,7 @@ import sys
 from pyspark import pipelines as dp
 from pyspark.sql.functions import col, count, count_if
 from pyspark.sql import functions as F
-from utilities import utils
+from medallion_dlt_breweries_silver_gold.utilities import utils
 
 # Parametri ricevuti da silver_gold.pipeline.yml
 catalog = spark.conf.get("breweries.catalog")
