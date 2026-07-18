@@ -4,17 +4,6 @@ import sys
 from pyspark import pipelines as dp
 from pyspark.sql.functions import col, count, count_if
 from pyspark.sql import functions as F
-
-pipeline_root = os.path.abspath(
-    os.path.join(
-        os.path.dirname(__file__), 
-        ".."
-    )
-)
-
-if pipeline_root not in sys.path:
-    sys.path.append(pipeline_root)
-
 from utilities import utils
 
 # Parametri ricevuti da silver_gold.pipeline.yml
