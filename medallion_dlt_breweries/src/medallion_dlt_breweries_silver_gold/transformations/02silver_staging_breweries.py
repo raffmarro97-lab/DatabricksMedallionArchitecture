@@ -7,7 +7,7 @@ catalog = spark.conf.get("breweries.catalog")
 schema_name = spark.conf.get("breweries.schema")
 
 bronze_table = f"{catalog}.{schema_name}.bronze_breweries"
-cdc_table = f"{catalog}.{schema_name}.cdc_breweries"
+cdc_table = f"{catalog}.{schema_name}.cdc_breweries_events"
 
 @dp.table(
     name = "silver_staging_breweries",
