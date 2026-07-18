@@ -18,7 +18,7 @@ resources:
             source: WORKSPACE
             base_parameters:
               catalog: ${resources.schemas.breweries_schema.catalog_name}
-              schema: ${resources.schemas.breweries_schema.schema.name}
+              schema: ${resources.schemas.breweries_schema.name}
 
         - task_key: Config
           depends_on:
@@ -30,7 +30,7 @@ resources:
             source: WORKSPACE
             base_parameters:
               catalog: ${resources.schemas.breweries_schema.catalog_name}
-              schema: ${resources.schemas.breweries_schema.schema.name}
+              schema: ${resources.schemas.breweries_schema.name}
 
         - task_key: Pipeline_Bronze_Ingestion_and_Silver_Ingestion
           depends_on:
@@ -53,7 +53,7 @@ resources:
             source: WORKSPACE
             base_parameters:
               catalog: ${resources.schemas.breweries_schema.catalog_name}
-              schema: ${resources.schemas.breweries_schema.schema.name}
+              schema: ${resources.schemas.breweries_schema.name}
               
         - task_key: Pipeline_Silver_Cleaning_and_Gold_Modeling
           depends_on:

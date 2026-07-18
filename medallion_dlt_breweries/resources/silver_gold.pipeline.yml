@@ -4,11 +4,11 @@ resources:
             name: medallion_breweries_silver_gold
 
             catalog: ${resources.schemas.breweries_schema.catalog_name}
-            schema: ${resources.schemas.breweries_schema.schema.name}
+            schema: ${resources.schemas.breweries_schema.name}
             
             configuration:
                 catalog: ${resources.schemas.breweries_schema.catalog_name}
-                schema: ${resources.schemas.breweries_schema.schema.name}
+                schema: ${resources.schemas.breweries_schema.name}
             
             serverless: true
             continuous: false
