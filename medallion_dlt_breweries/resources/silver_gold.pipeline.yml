@@ -16,6 +16,9 @@ resources:
 
             libraries:
                 - file:
+                    path: ../src/medallion_dlt_breweries_silver_gold/utilities/utils.py
+                
+                - file:
                     path: ../src/medallion_dlt_breweries_silver_gold/transformations/02silver_staging_breweries.py
 
                 - file:
