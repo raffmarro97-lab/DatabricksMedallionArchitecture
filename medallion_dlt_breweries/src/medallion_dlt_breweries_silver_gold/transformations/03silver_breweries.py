@@ -7,7 +7,7 @@ from pyspark.sql import functions as F
 
 pipeline_root = os.path.abspath(
     os.path.join(
-        os.path.dirname("__file__"), 
+        os.path.dirname(__file__), 
         ".."
     )
 )
