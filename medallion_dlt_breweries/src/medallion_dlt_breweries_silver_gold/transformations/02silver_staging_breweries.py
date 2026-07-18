@@ -10,7 +10,7 @@ bronze_table = f"{catalog}.{schema_name}.bronze_breweries"
 cdc_table = f"{catalog}.{schema_name}.cdc_breweries"
 
 @dp.table(
-    name = "workspace.pipeline_breweries.silver_staging_breweries",
+    name = "silver_staging_breweries",
     comment = "Add ingestion_ts"
 )
 def silver_staging_breweries():

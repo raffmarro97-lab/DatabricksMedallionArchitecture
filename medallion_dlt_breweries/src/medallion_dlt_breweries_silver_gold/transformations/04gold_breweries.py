@@ -15,7 +15,7 @@ def silver_breweries_stream():
             )
 
 dp.create_streaming_table(
-    name = "workspace.pipeline_breweries.gold_breweries",
+    name = "gold_breweries",
     comment = "SCD Type 2 - Storico delle modifiche"
 )
 

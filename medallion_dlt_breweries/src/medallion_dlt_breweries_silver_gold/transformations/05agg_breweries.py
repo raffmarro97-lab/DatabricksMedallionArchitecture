@@ -7,7 +7,7 @@ schema_name = spark.conf.get("breweries.schema")
 gold_table = f"{catalog}.{schema_name}.gold_breweries"
 
 @dp.table(
-    name = "workspace.pipeline_breweries.agg_breweries",
+    name = "agg_breweries",
     comment = "Aggregated breweries - Numero di breweries per stato"
 )
 def agg_breweries():

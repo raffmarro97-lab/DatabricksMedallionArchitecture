@@ -21,7 +21,7 @@ schema_name = spark.conf.get("breweries.schema")
 silver_staging_table = f"{catalog}.{schema_name}.silver_staging_breweries"
 
 @dp.table(
-    name = "workspace.pipeline_breweries.silver_breweries",
+    name = "silver_breweries",
     comment = "Cleaning the bronze table,  and add ingestion_ts"
 )
 def silver_breweries():
