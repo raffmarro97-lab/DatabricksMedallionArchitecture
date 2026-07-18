@@ -4,6 +4,12 @@ bundle:
 include:
   - resources/*.yml
 
+artifacts:
+  breweries_wheel:
+    type: wh1
+    path: .
+    build: python -m build
+
 variables:
   catalog:
     description: Unity Catalog catalog used by the project
