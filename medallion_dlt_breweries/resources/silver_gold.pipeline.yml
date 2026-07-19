@@ -16,7 +16,7 @@ resources:
 
             environment:
                 dependencies:
-                    - ./dist/*.wh1
+                    - ../dist/*.whl
 
             libraries:
                 - file:
