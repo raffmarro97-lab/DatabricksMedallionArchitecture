@@ -20,3 +20,6 @@ __pycache__/
 _delta_log/
 *.crc
 medallion_dlt_breweries/.databricks/
+medallion_dlt_breweries/dist/
+medallion_dlt_breweries/build/
+medallion_dlt_breweries/src/*.egg-info/
