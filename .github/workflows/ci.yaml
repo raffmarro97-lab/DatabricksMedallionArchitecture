@@ -40,10 +40,10 @@ jobs:
         run: python -m build
 
       - name: Install Databricks CLI
-        run: databricks/setup-cli@main
+        uses: databricks/setup-cli@main
 
-      - name: Validate Databrick bundle
+      - name: Validate Databricks bundle
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: datarbicks bundle vlaidate -t qa
+        run: databricks bundle validate -t qa

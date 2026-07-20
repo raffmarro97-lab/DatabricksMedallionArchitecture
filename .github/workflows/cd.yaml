@@ -1,9 +1,7 @@
 name: Databricks Bundle CD
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   deploy-qa:
@@ -11,7 +9,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: medallion-dlt-breweries
+        working-directory: medallion_dlt_breweries
   
     steps:
       - name: Checkout repository
