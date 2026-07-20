@@ -1,0 +1,83 @@
+resources:
+  jobs:
+    medallion_dlt_breweries:
+      name: medallion_dlt_breweries
+
+      performance_target: PERFORMANCE_OPTIMIZED
+
+      trigger:
+        pause_status: UNPAUSED
+        periodic:
+          interval: 1
+          unit: DAYS
+
+      tasks:
+        - task_key: Compute_Page
+          notebook_task:
+            notebook_path: ../src/orchestration/CountBronze_Breweries.ipynb
+            source: WORKSPACE
+            base_parameters:
+              catalog: ${resources.schemas.breweries_schema.catalog_name}
+              schema: ${resources.schemas.breweries_schema.name}
+
+        - task_key: Config
+          depends_on:
+            - task_key: Compute_Page
+          run_if: ALL_SUCCESS
+
+          notebook_task:
+            notebook_path: ../src/orchestration/pass_config.ipynb
+            source: WORKSPACE
+            base_parameters:
+              catalog: ${resources.schemas.breweries_schema.catalog_name}
+              schema: ${resources.schemas.breweries_schema.name}
+
+        - task_key: Pipeline_Bronze_Ingestion_and_Silver_Ingestion
+          depends_on:
+            - task_key: Config
+          
+          run_if: ALL_SUCCESS
+
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.bronze_silver_pipeline.id}
+            full_refresh: false
+
+        - task_key: Creation_Randomic_Data
+          depends_on:
+            - task_key: Pipeline_Bronze_Ingestion_and_Silver_Ingestion
+
+          run_if: ALL_SUCCESS
+
+          notebook_task:
+            notebook_path: ../src/medallion_dlt_breweries_silver_gold/utilities/Creation Randomic Data.ipynb
+            source: WORKSPACE
+            base_parameters:
+              catalog: ${resources.schemas.breweries_schema.catalog_name}
+              schema: ${resources.schemas.breweries_schema.name}
+              
+        - task_key: Pipeline_Silver_Cleaning_and_Gold_Modeling
+          depends_on:
+            - task_key: Creation_Randomic_Data
+
+          run_if: ALL_SUCCESS
+
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.silver_gold_pipeline.id}
+            full_refresh: false
+
+        - task_key: Slack_Notification
+          depends_on:
+            - task_key: Pipeline_Silver_Cleaning_and_Gold_Modeling
+
+          run_if: ALL_DONE
+
+          notebook_task:
+            notebook_path: ../src/notifications/SlackNotificationJobStatus.ipynb
+            source: WORKSPACE
+
+            base_parameters:
+              job_name: medallion_dlt_breweries
+              job_status: >-
+                {{tasks.Pipeline_Silver_Cleaning_and_Gold_Modeling.result_state}}
+              run_url: >-
+                {{workspace.url}}/jobs/{{job.id}}/runs/{{job.run_id}}

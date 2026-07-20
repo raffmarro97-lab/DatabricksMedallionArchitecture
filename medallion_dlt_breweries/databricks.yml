@@ -1,0 +1,80 @@
+bundle:
+  name: medallion-dlt-breweries
+
+include:
+  - resources/*.yml
+
+artifacts:
+  breweries_wheel:
+    type: whl
+    path: .
+    build: python -m build
+
+variables:
+  catalog:
+    description: Unity Catalog catalog used by the project
+    default: workspace
+
+  schema:
+    description: Schema used by the pipelines
+
+  notification_webhook_scope:
+    description: Databricks secret scope containing the Slack webhook
+    default: breweries-secrets
+
+  notification_webhook_key:
+    description: Secret key containing the Slack webhook
+    default: slack-webhook
+
+sync:
+  include:
+    - src/**
+    
+targets:
+ dev:
+  default: true
+  mode: development
+   
+  workspace:
+   host: https://dbc-ffab9e1e-aa5d.cloud.databricks.com
+   root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+  
+  presets:
+   name_prefix: "[dev ${workspace.current_user.short_name}] "
+   pipelines_development: true
+   trigger_pause_status: PAUSED
+  
+  variables:
+   catalog: workspace
+   schema: pipeline_breweries_dev
+
+ qa:
+  mode: development
+
+  workspace:
+   host: https://dbc-ffab9e1e-aa5d.cloud.databricks.com
+   root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+  
+  presets:
+   name_prefix: "[qa ${workspace.current_user.short_name}] "
+   pipelines_development: true
+   trigger_pause_status: PAUSED
+
+  variables:
+    catalog: workspace
+    schema: pipeline_breweries_qa
+    
+ prod:
+  mode: production
+
+  workspace:
+   host: https://dbc-ffab9e1e-aa5d.cloud.databricks.com
+   root_path: /Workspace/Users/.bundle/${bundle.name}/${bundle.target}
+
+  presets:
+   pipelines_development: false
+   trigger_pause_status: PAUSED
+ 
+  variables:
+    catalog: workspace
+    schema: pipeline_breweries

@@ -1,0 +1,19 @@
+resources:
+  pipelines:
+    bronze_silver_pipeline:
+      name: medallion_breweries_bronze_silver
+      
+      catalog: ${resources.schemas.breweries_schema.catalog_name}
+      schema: ${resources.schemas.breweries_schema.name}
+            
+      configuration:
+        breweries.catalog: ${resources.schemas.breweries_schema.catalog_name}
+        breweries.schema: ${resources.schemas.breweries_schema.name}
+      
+      serverless: true
+      continuous: false
+      photon: true
+
+      libraries:
+      - file:
+          path: ../src/medallion_dlt_breweries_bronze_silver/transformations/01bronze_breweries.py

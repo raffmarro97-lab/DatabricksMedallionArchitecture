@@ -1,0 +1,32 @@
+resources:
+    pipelines:
+        silver_gold_pipeline:
+            name: medallion_breweries_silver_gold
+
+            catalog: ${resources.schemas.breweries_schema.catalog_name}
+            schema: ${resources.schemas.breweries_schema.name}
+            
+            configuration:
+                breweries.catalog: ${resources.schemas.breweries_schema.catalog_name}
+                breweries.schema: ${resources.schemas.breweries_schema.name}
+            
+            serverless: true
+            continuous: false
+            photon: true
+
+            environment:
+                dependencies:
+                    - ../dist/*.whl
+
+            libraries:
+                - file:
+                    path: ../src/medallion_dlt_breweries_silver_gold/transformations/02silver_staging_breweries.py
+
+                - file:
+                    path: ../src/medallion_dlt_breweries_silver_gold/transformations/03silver_breweries.py
+
+                - file:
+                    path: ../src/medallion_dlt_breweries_silver_gold/transformations/04gold_breweries.py
+
+                - file:
+                    path: ../src/medallion_dlt_breweries_silver_gold/transformations/05agg_breweries.py
