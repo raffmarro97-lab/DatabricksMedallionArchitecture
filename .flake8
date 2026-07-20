@@ -4,4 +4,7 @@ extend-ignore = F401,F403,F405,E111,W293,W292,E302,E303,E251,E114
 exclude =
     .git,
     __pycache__,
-    explorations/
+    explorations,
+    build,
+    dist,
+    *.egg-info
