@@ -6,7 +6,7 @@ include:
 
 artifacts:
   breweries_wheel:
-    type: wh1
+    type: whl
     path: .
     build: python -m build
 
@@ -65,11 +65,11 @@ targets:
 
   workspace:
    host: https://dbc-ffab9e1e-aa5d.cloud.databricks.com
-   root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
+   root_path: /Workspace/Users/.bundle/${bundle.name}/${bundle.target}
 
   presets:
    pipelines_development: false
-   trigger_pause_status: UNPAUSED
+   trigger_pause_status: PAUSED
  
   variables:
     catalog: workspace
