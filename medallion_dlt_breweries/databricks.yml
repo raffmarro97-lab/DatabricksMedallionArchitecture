@@ -60,6 +60,10 @@ targets:
    pipelines_development: true
    trigger_pause_status: PAUSED
 
+  variables:
+    catalog: workspace
+    schema: pipeline_breweries_qa
+    
  prod:
   mode: production
 
