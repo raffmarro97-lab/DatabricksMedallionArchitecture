@@ -6,7 +6,6 @@ resources:
       performance_target: PERFORMANCE_OPTIMIZED
 
       trigger:
-        pause_status: UNPAUSED
         periodic:
           interval: 1
           unit: DAYS
