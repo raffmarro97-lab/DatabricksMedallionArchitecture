@@ -69,7 +69,7 @@ targets:
 
   workspace:
    host: https://dbc-ffab9e1e-aa5d.cloud.databricks.com
-   root_path: /Workspace/Users/.bundle/${bundle.name}/${bundle.target}
+   root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
 
   presets:
    pipelines_development: false
