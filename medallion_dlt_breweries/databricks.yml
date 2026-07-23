@@ -73,7 +73,7 @@ targets:
 
   presets:
    pipelines_development: false
-   trigger_pause_status: PAUSED
+   trigger_pause_status: UNPAUSED
  
   variables:
     catalog: workspace
