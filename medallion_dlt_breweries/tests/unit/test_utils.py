@@ -1,8 +1,24 @@
-from medallion_dlt_breweries_silver_gold.utilities.utils import(
-    clean_phone,
-    fill_null
+from pyspark.sql.types import (
+    IntegerType,
+    StringType,
+    StructField,
+    StructType,
 )
+
+from medallion_dlt_breweries_silver_gold.utilities.utils import (
+    clean_phone,
+    fill_null,
+)
+
+
 def test_clean_phone(spark):
+    schema = StructType(
+        [
+            StructField("row_id", IntegerType(), False),
+            StructField("phone", StringType(), True),
+        ]
+    )
+
     input_df = spark.createDataFrame(
         [
             (1, "+39 333-123-4567"),
@@ -10,18 +26,19 @@ def test_clean_phone(spark):
             (3, "333 555 7777"),
             (4, None),
         ],
-        ["row_id", "phone"],
+        schema=schema,
     )
 
-    result = (
+    rows = (
         input_df
         .withColumn("clean_phone", clean_phone("phone"))
+        .orderBy("row_id")
         .collect()
     )
 
     actual = {
         row["row_id"]: row["clean_phone"]
-        for row in result
+        for row in rows
     }
 
     assert actual == {
@@ -31,27 +48,39 @@ def test_clean_phone(spark):
         4: "Unknown",
     }
 
+
 def test_fill_null(spark):
-    input_df = spark.createDataFrame(
+    schema = StructType(
         [
-            ("Existing address"),
-            (None)
-        ],
-        ["address_2"]
+            StructField("row_id", IntegerType(), False),
+            StructField("address_2", StringType(), True),
+        ]
     )
 
-    result = (
+    input_df = spark.createDataFrame(
+        [
+            (1, "Existing address"),
+            (2, None),
+        ],
+        schema=schema,
+    )
+
+    rows = (
         input_df
         .withColumn(
             "filled_address",
-            fill_null("address_2", "Doesn't exist")
+            fill_null("address_2", "Doesn't exist"),
         )
+        .orderBy("row_id")
         .collect()
     )
 
-    actual = [row["filled_address"] for row in result]
+    actual = {
+        row["row_id"]: row["filled_address"]
+        for row in rows
+    }
 
-    assert actual == [
-        "Existing address",
-        "Doesn't exist",
-    ]
+    assert actual == {
+        1: "Existing address",
+        2: "Doesn't exist",
+    }
