@@ -63,9 +63,10 @@ resources:
           pipeline_task:
             pipeline_id: ${resources.pipelines.silver_gold_pipeline.id}
             full_refresh: false
+
         - task_key: Integration_Test
           depends_on:
-            - task_key: Pipeline_Silver_Cleaning_and_Gold_Modelling
+            - task_key: Pipeline_Silver_Cleaning_and_Gold_Modeling
           
           run_if: ALL_SUCCESS
           
