@@ -73,8 +73,8 @@ resources:
             notebook_path: ../src/validation/test_integration_validate_pipeline.ipynb
             source: WORKSPACE
             base_parameters:
-              catalog: ${resources.schema.breweries_schema.catalog_name}
-              schema: ${resources.schema_breweries_schema.name}
+              catalog: ${resources.schemas.breweries_schema.catalog_name}
+              schema: ${resources.schemas.breweries_schema.name}
 
         - task_key: Slack_Notification
           depends_on:
