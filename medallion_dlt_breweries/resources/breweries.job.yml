@@ -63,10 +63,22 @@ resources:
           pipeline_task:
             pipeline_id: ${resources.pipelines.silver_gold_pipeline.id}
             full_refresh: false
+        - task_key: Integration_Test
+          depends_on:
+            - task_key: Pipeline_Silver_Cleaning_and_Gold_Modelling
+          
+          run_if: ALL_SUCCESS
+          
+          notebook_task:
+            notebook_path: ../src/validation/test_integration_validate_pipeline.ipynb
+            source: WORKSPACE
+            base_parameters:
+              catalog: ${resources.schema.breweries_schema.catalog_name}
+              schema: ${resources.schema_breweries_schema.name}
 
         - task_key: Slack_Notification
           depends_on:
-            - task_key: Pipeline_Silver_Cleaning_and_Gold_Modeling
+            - task_key: Integration_Test
 
           run_if: ALL_DONE
 
@@ -77,6 +89,6 @@ resources:
             base_parameters:
               job_name: medallion_dlt_breweries
               job_status: >-
-                {{tasks.Pipeline_Silver_Cleaning_and_Gold_Modeling.result_state}}
+                {{tasks.Integration_Test.result_state}}
               run_url: >-
                 {{workspace.url}}/jobs/{{job.id}}/runs/{{job.run_id}}
