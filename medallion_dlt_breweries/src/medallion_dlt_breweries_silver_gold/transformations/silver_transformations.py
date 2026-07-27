@@ -24,11 +24,11 @@ def transform_silver_breweries(df: DataFrame) -> DataFrame:
             'website_url',
             'ingestion_ts'
         )
-#        non è stata più adottata questa condizione where perché specificata come metrica di DQ
-#        .where(
-#            (F.col("country") == "United States") &
-#            (F.col("address_1").isNotNull())
-#        )
+        # non è stata più adottata questa condizione where perché specificata come metrica di DQ
+        # .where(
+        #    (F.col("country") == "United States") &
+        #    (F.col("address_1").isNotNull())
+        # )
         .withColumn(
             "address_2",
             utils.fill_null("address_2", "Doesn't exist")
@@ -89,6 +89,4 @@ def transform_silver_breweries(df: DataFrame) -> DataFrame:
             'website_url',
             'ingestion_ts'
         )
-
     )
-
