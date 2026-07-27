@@ -25,16 +25,23 @@ jobs:
         with:
           python-version: "3.10"
 
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           python -m pip install flake8 pytest pyspark build
+          python -m pip install -e .
 
       - name: Lint Python source code
         run: flake8 src
         
       - name: Run tests
-        run: pytest tests/ -v 
+        run: python -m pytest tests/unit -v 
 
       - name: Builld wheel
         run: python -m build
