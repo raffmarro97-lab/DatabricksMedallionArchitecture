@@ -1,17 +1,11 @@
 # 🍺 Breweries Medallion Architecture — Databricks Data Engineering Project
 
 [![Databricks](https://img.shields.io/badge/Databricks-Lakeflow%20Pipeline-red)](https://www.databricks.com/)
-
 [![Python](https://img.shields.io/badge/Python-3.10%2B-green)](https://www.python.org/)
-
 [![PySpark](https://img.shields.io/badge/PySpark-DataFrame%20API-orange)](https://spark.apache.org/docs/latest/api/python/)
-
 [![Delta Lake](https://img.shields.io/badge/Delta%20Lake-SCD%20Type%202-blue)](https://delta.io/)
-
 [![Databricks Asset Bundles](https://img.shields.io/badge/Databricks-Asset%20Bundles-purple)](https://docs.databricks.com/)
-
 [![CI](https://github.com/raffmarro97-lab/DatabricksMedallionArchitecture/actions/workflows/ci.yaml/badge.svg)](https://github.com/raffmarro97-lab/DatabricksMedallionArchitecture/actions/workflows/ci.yaml)
-
 [![CD](https://github.com/raffmarro97-lab/DatabricksMedallionArchitecture/actions/workflows/cd.yaml/badge.svg)](https://github.com/raffmarro97-lab/DatabricksMedallionArchitecture/actions/workflows/cd.yaml)
 
 ## 🎯 Overview
