@@ -14,8 +14,12 @@ silver_staging_table = f"{catalog}.{schema_name}.silver_staging_breweries"
     comment="Cleaning the bronze table, and add ingestion_ts"
 )
 @dp.expect_or_fail(
-    "valid_ingestion_timestamp",
+    "valid_brewery_id",
     "id is not NULL"
+)
+@dp.expect_or_fail(
+    "valid_ingestion_timestamp",
+    "ingestion_ts is not NULL"
 )
 @dp.expect_or_drop(
     "valid_country",
